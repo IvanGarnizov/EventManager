@@ -1,4 +1,6 @@
 The application works with a database and resolves under a few commands, which come from the console.
+The arguments should be separated by spaces.
+The dates you enter should be in format yyyy/MM/ddTHH:mm:ss
 
 Commands:
 
