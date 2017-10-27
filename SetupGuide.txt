@@ -1,0 +1,45 @@
+The application works with a database and resolves under a few commands, which come from the console.
+
+Commands:
+
+Read - it gathers all events from the database and displays them in format:
+~~~~~~~~~~~
+Id: {idOfEvent}
+Name: {nameOfEvent}
+Location: {locationOfEvent}
+From: {startDateAndTimeOfEvent} To: {endDateAndTimeOfEvent}
+~~~~~~~~~~~
+If there are no events it prints 'There are no events'.
+
+Create - it always expects 4 arguments - {name}, {location}, {startDateAndTime}, {endDateAndTime}.
+If the number of arguments isn't 4, it prints a message 'When creating a new event the program expects 4 arguments - {name}, {location}, {startDateAndTime}, {endDateAndTime}' and continues with next command.
+If the number of arguments is 4, the method CreateEvent is called and the arguments are passed to it.
+The metheod checks if the dates are in correct format: yyyy/MM/ddTHH:mm:ss.
+If they are not in correct format, the program prints a message 'All dates must be in format yyyy/MM/ddTHH:mm:ss' and continues with next command.
+If they are in correct format, the program checks if the dates are in correct sequence.
+If they are not, e.g startDateAndTime is 2017/10/27T13:34:05 and endDateAndTime is 2017/10/27T13:33:15, the program prints a message 'An event can't end before it has started.' and continues with next command.
+If everything is ok, a new Event is instantiated and saved to the database and the program prints a message 'Successfully created event {name}.'.
+
+Update - it expects from 2 to 5 arguments - the first being the id and the others are the fields you wish to be updated, in format: {field}=value, where {field} is one of the following: [name, location, startDateAndTime, endDateAndTime].
+If the number of arguments isn't correct, the program prints a message 'When updating an event, the program expects from 2 to 5 arguments - id and the fields you wish to update in format {field}=value, where {field} is one of the following: [name, location, startDateAndTime, endDateAndTime].' and continues with next command.
+Otherwise it calls the method UpdateEvent, passing it the arguments.
+Firstly the method checks if the id is an integer.
+If it's not, the program prints a message 'Id is not an integer.' and continues with next command.
+Otherwise, the program continues by checking if event with this id exists.
+If not, it prints out a message 'Event with id {id} doesn't exist.' and continues with next command.
+Otherwise, it starts a loop through the arguments and checks if an argument contains '='.
+If not, the program prints 'Incorrect data. Field name must be followed by '='.' and continues with next command.
+Otherwise, it splits the argument by '=' and runs a switch statement on the field, found before '='.
+If it's a correct field, e.g being [name, location, startDateAndTime, endDateAndTime], the program assigns it to a variable.
+Otherwise, the program prints 'Field {field} does not exist in an event.' and continues with next command.
+Then the program checks if there are any entered dates, and determine if their sequence is corrent.
+If there wasn't any incorrect fields or incorrect dates, the program updates the entity and prints 'Successfully updated event {name}.'.
+
+Delete - it expects 1 argument - id.
+Firstly the method checks if the id is an integer.
+If it's not, the program prints a message 'Id is not an integer.' and continues with next command.
+Otherwise, the program continues by checking if event with this id exists.
+If not, it prints out a message 'Event with id {id} doesn't exist.' and continues with next command.
+Otherwise, it deletes the event and prints 'Successfully deleted event {name}.'
+
+stop - it ends program execution.
